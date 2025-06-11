@@ -1,0 +1,64 @@
+Step 3: Install and Set Up Jenkins
+Download and install Jenkins from jenkins.io.
+
+Open Jenkins in your browser at http://localhost:8080.
+
+Complete the initial setup (unlock Jenkins, install suggested plugins).
+
+Configure Git credentials in Jenkins (Manage Jenkins → Credentials → Add Git credentials).
+
+Install plugins needed for Git and webhook support (usually installed by default).
+
+Step 4: Create a New Jenkins Job
+In Jenkins, click New Item → enter a job name → select Freestyle project → click OK.
+
+In the job settings, go to Build Triggers and check GitHub hook trigger for GITScm polling.
+
+Step 5: Configure the Build Step
+Scroll to Build section → click Add build step → select Execute shell.
+
+Enter shell commands to build and deploy your app. Example commands:
+
+bash
+Copy
+Edit
+# Remove old files from local server directory
+rm -rf /var/www/html/webdirectory/*
+
+# Copy new files to the local server directory
+cp -r * /var/www/html/webdirectory/
+(Modify /var/www/html/webdirectory/ to your local HTTP server’s root folder.)
+
+Step 6: Set Up GitHub Webhook
+Go to your GitHub repository → Settings → Webhooks → Add webhook.
+
+For Payload URL, enter:
+
+perl
+Copy
+Edit
+http://<your-jenkins-server>/github-webhook/
+Set Content type to application/json.
+
+Leave Secret empty (optional).
+
+Click Add webhook.
+
+Step 7: Test the Pipeline
+Make a change in your web app (edit/add files).
+
+Commit and push changes to the remote Git repo:
+
+sql
+Copy
+Edit
+git add .
+git commit -m "Update web app"
+git push origin main
+The webhook triggers Jenkins, which runs the job: building and deploying the app automatically.
+
+Step 8: Verify Deployment
+Open your browser and go to your local HTTP server URL (e.g., http://localhost or your configured path).
+
+Check if your latest changes are live.
+
