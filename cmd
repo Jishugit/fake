@@ -1,4 +1,5 @@
- python3 -m http.server 8000
+go to folder where index.html is saved then open command /prompt
+python3 -m http.server 8000
  git init
  git add .
   git commit -m "Initial commit"
